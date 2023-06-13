@@ -1,0 +1,4 @@
+- yarn add sucrase -D  (Em desenvolvimento);
+- nodemon.json , faz o mapeamento para o nodemon na package.json;
+- yarn add eslint -D; yarn eslint --init, serão feitas perguntas sobre o projeto;
+- 
