@@ -1,4 +1,4 @@
-let customers = [
+const customers = [
   { id: 1, name: "Dev Samurai", site: "https://devsamurai.com.br" },
   { id: 2, name: "Dev Juninho", site: "https://devjuninho.com.br" },
   { id: 3, name: "Dev Goku", site: "https://devgoku.com.br" },
@@ -9,23 +9,23 @@ let customers = [
 ];
 
 class CustomersController {
-  //List dos customers
+  // List dos customers
   index(req, res) {
     return res.json(customers);
   }
 
-  //Recupera um customer
+  // Recupera um customer
   show(req, res) {
-    const id = parseInt(req.params.id);
-    const customer = customers.find((item) => item.id == id);
+    const id = parseInt(req.params.id, 10);
+    const customer = customers.find((item) => item.id === id);
     const status = customer ? 200 : 404;
 
-    console.log("GET :: /customers/:id", JSON.stringify(customer));
+    console.warn("GET :: /customers/:id", JSON.stringify(customer));
 
     return res.status(status).json(customer);
   }
 
-  //Cria um customer
+  // Cria um customer
   create(req, res) {
     const { nome, site } = req.body;
     const id = customers[customers.length - 1].id + 1;
@@ -36,25 +36,25 @@ class CustomersController {
     return res.status(201).json(newCustomer);
   }
 
-  //Atualiza um customer
+  // Atualiza um customer
   update(req, res) {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id, 10);
     const { name, site } = req.body;
 
-    const index = customers.find((item) => item.id == id);
+    const index = customers.find((item) => item.id === id);
     const status = index >= 0 ? 200 : 404;
 
     if (index >= 0) {
-      customers[index] = { id: parseInt(id), name, site };
+      customers[index] = { id: parseInt(id, 10), name, site };
     }
 
     return res.status(status).json(customers[index]);
   }
 
-  //Exclui um customer
+  // Exclui um customer
   destroy(req, res) {
-    const id = parseInt(req.params.id);
-    const index = customers.find((item) => item.id == id);
+    const id = parseInt(req.params.id, 10);
+    const index = customers.find((item) => item.id === id);
     const status = index >= 0 ? 200 : 404;
 
     if (index >= 0) {
