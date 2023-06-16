@@ -3,4 +3,6 @@
 - yarn add eslint -D; yarn eslint --init, serão feitas perguntas sobre o projeto;
 - \*\* Sequelize
 
+- yarn sequelize db:migrate
 - yarn sequelize migration:create --name=create-customers
+- yarn sequelize db:migrate:undo:all
