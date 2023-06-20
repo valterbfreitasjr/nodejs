@@ -11,11 +11,11 @@ module.exports = {
         primaryKey: true,
       },
       name: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       email: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
@@ -29,7 +29,7 @@ module.exports = {
       },
       customer_id: {
         type: Sequelize.INTEGER,
-        references: { model: "customers", key: "id" },
+        references: { model: "customer", key: "id" },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
         allowNull: false,

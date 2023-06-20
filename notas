@@ -5,4 +5,12 @@
 
 - yarn sequelize db:migrate
 - yarn sequelize migration:create --name=create-customers
+- yarn sequelize migration:create --name=remove-customers
 - yarn sequelize db:migrate:undo:all
+
+ *** Postgres
+    - Não tem suporte nativo para ENUMs, ao remover uma, o TYPE criado no Postgres, permanece, caso seja feito a criação novamente do ENUM
+      irá retornar um erro de que o ENUM já existe.
+      @SOLUÇÃO - LIB: sequelize-replace-enum-postgres.
+
+
