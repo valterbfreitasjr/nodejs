@@ -112,7 +112,14 @@ class ContactController {
 
   // Recupera um customer
   async show(req, res) {
-    const contact = await Contact.findByPk(req.params.id);
+    const contact = await Contact.findOne({
+      where: {
+        customer_id: req.params.customerId,
+        id: req.params.id,
+      },
+      // include: [Customer], //Irá retornar o customer também.
+      attributes: { exclude: ["customer_id", "customerId"] },
+    });
 
     if (!contact) {
       return res.status(404).json();
@@ -123,7 +130,6 @@ class ContactController {
 
   // Cria um customer
   async create(req, res) {
-    // Utilizado o Yup para validar o request.body
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
@@ -134,7 +140,10 @@ class ContactController {
       return res.status(400).json({ error: "Error on validate schema!" });
     }
 
-    const contact = await Contact.create(req.body);
+    const contact = await Contact.create({
+      customer_id: req.params.customerId,
+      ...req.body,
+    });
 
     return res.status(201).json(contact);
   }
@@ -147,7 +156,14 @@ class ContactController {
       status: Yup.string().uppercase(),
     });
 
-    const contact = await Contact.findByPk(req.params.id);
+    const contact = await Contact.findOne({
+      where: {
+        customer_id: req.params.customerId,
+        id: req.params.id,
+      },
+      // include: [Customer], //Irá retornar o customer também.
+      attributes: { exclude: ["customer_id", "customerId"] },
+    });
 
     if (!contact) {
       return res.status(400).json({ error: "Error on validate schema!" });
@@ -160,7 +176,12 @@ class ContactController {
 
   // Exclui um customer
   async destroy(req, res) {
-    const contact = await Contact.findByPk(req.params.id);
+    const contact = await Contact.findOne({
+      where: {
+        customer_id: req.params.customerId,
+        id: req.params.id,
+      },
+    });
 
     if (!contact) {
       return res.status(400).json({ error: "Error on validate schema!" });
@@ -168,7 +189,7 @@ class ContactController {
 
     await contact.destroy();
 
-    return res.json();
+    return res.status(201).json();
   }
 }
 

@@ -20,3 +20,6 @@ lib: date-fns
 lib: yup
 => Para validar os campos da requisição com as tabelas, ex: criar um objeto com 'name' obrigatório, porém não passar o nome.
 Exemplo: Criado no CustomersController, para validar o 'create' e obdecer aos required!
+
+lib: bcrypt.js
+=> Utilizado para criar hashs de password.
