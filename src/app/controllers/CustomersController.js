@@ -109,7 +109,7 @@ class CustomersController {
       include: [
         {
           model: Contact,
-          attributes: ["id", "status"],
+          attributes: ["id", "name", "status"],
         },
       ],
       order,

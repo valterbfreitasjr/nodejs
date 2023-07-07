@@ -23,3 +23,15 @@ Exemplo: Criado no CustomersController, para validar o 'create' e obdecer aos re
 
 lib: bcrypt.js
 => Utilizado para criar hashs de password.
+
+lib: jsonwebtoken (jwt)
+=> Utilizado para criar o token de autenticação.
+:: jwt.sign({id}, "HASH", { expiresIn: "7d"})
+https://www.md5hashgenerator.com/ <== Para criar a HASH
+\*\* Colocar no "Header" o value: "Authorization" "Bearer HASH"
+
+lib: Multer
+=> Lib para upload de arquivos
+
+{ extname, resolve } from "path"
+=> Ajuda no path do arquivo: resolve(\_\_disname, "..", "..", "tmp", "uploads"), // Onde cada ".." sobe um nível de pasta.
