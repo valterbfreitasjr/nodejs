@@ -35,3 +35,18 @@ lib: Multer
 
 { extname, resolve } from "path"
 => Ajuda no path do arquivo: resolve(\_\_disname, "..", "..", "tmp", "uploads"), // Onde cada ".." sobe um nível de pasta.
+
+lib: NodeMailer
+=> Utilizado para envio de e-mail.
+
+lib: Bee-Queue
+=> Usado para background jobs (Queues), filas de serviço.
+
+lib: dotenv
+=> Facilitar criação de variáveis de ambiente.
+
+lib: express-async-erros
+=> Permite que os erros sejam recuperados dentro da aplicação.
+
+lib: Youch
+=> Utilizada para um melhor tratamento de erros.

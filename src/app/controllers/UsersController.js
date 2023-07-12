@@ -4,6 +4,10 @@ import { parseISO } from "date-fns";
 
 import User from "../models/User";
 
+import Queue from "../../lib/Queue";
+import DummyJob from "../jobs/DummyJob";
+import WelcomeEmailJob from "../jobs/WelcomeEmailJob";
+
 class UsersController {
   async index(req, res) {
     const {
@@ -100,14 +104,13 @@ class UsersController {
       return res.status(404).json();
     }
 
-    const { id, name, email, createdAt, updatedAt } = user;
+    const { id, name, email, file_id, createdAt, updatedAt } = user;
 
-    return res.json({ id, name, email, createdAt, updatedAt });
+    return res.json({ id, name, email, file_id, createdAt, updatedAt });
   }
 
   //create
   async create(req, res) {
-    // Utilizado o Yup para validar o request.body
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
@@ -121,11 +124,15 @@ class UsersController {
       return res.status(400).json({ error: "Error on validate schema!" });
     }
 
-    const { id, name, email, createdAt, updatedAt } = await User.create(
-      req.body
-    );
+    const { id, name, email, file_id, createdAt, updatedAt } =
+      await User.create(req.body);
 
-    return res.status(201).json({ id, name, email, createdAt, updatedAt });
+    await Queue.add(DummyJob.key, { message: "DummyJob!" });
+    await Queue.add(WelcomeEmailJob.key, { name, email });
+
+    return res
+      .status(201)
+      .json({ id, name, email, file_id, createdAt, updatedAt });
   }
 
   //update
@@ -160,11 +167,12 @@ class UsersController {
       return res.status(401).json({ error: "User password not match." });
     }
 
-    const { id, name, email, createdAt, updatedAt } = await user.update(
-      req.body
-    );
+    const { id, name, email, file_id, createdAt, updatedAt } =
+      await user.update(req.body);
 
-    return res.status(201).json({ id, name, email, createdAt, updatedAt });
+    return res
+      .status(201)
+      .json({ id, name, email, file_id, createdAt, updatedAt });
   }
 
   //destroy
